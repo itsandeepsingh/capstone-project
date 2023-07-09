@@ -26,11 +26,15 @@ const RecipesList = styled.div`
 export default function Recipes() {
   return (
     <RecipesList>
-      {recipes?.map((recipe) => (
-        <li key={recipe.id}>
-          <Recipe key={recipe.id} recipe={recipe} />
-        </li>
-      ))}
+      {recipes && recipes.length > 0 ? (
+        recipes.map((recipe) => (
+          <li key={recipe.id}>
+            <Recipe key={recipe.id} recipe={recipe} />
+          </li>
+        ))
+      ) : (
+        <li>Keine Rezepte gefunden</li>
+      )}
     </RecipesList>
   );
 }

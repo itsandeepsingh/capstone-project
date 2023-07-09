@@ -11,16 +11,19 @@ const RecipeImage = styled.img`
   width: 100%;
   height: 200px;
   object-fit: cover;
+  border-radius: 15px;
 `;
 
 const RecipeTitle = styled.p`
   font-weight: bold;
   text-align: left;
+  margin: 5px 0;
 `;
 
 const RecipeSubtitle = styled.p`
   font-style: italic;
   text-align: left;
+  margin: 3px 0;
 `;
 
 export default function Recipe({ recipe }) {
