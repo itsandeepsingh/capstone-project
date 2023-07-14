@@ -1,5 +1,4 @@
-import React from "react";
-import Recipe from "../Recipe";
+import Recipe from "../Recipe/Recipe";
 import styled from "styled-components";
 import { RecipeClass, recipes } from "../../lib/recipes";
 
@@ -10,16 +9,14 @@ const RecipesList = styled.div`
   gap: 1rem;
   justify-content: center;
   margin: 20px;
+  }`;
 
-  li {
-    width: 150px;
-    min-width: 50px;
-  }
+const RecipesListElement = styled.li`
+  width: 150px;
+  min-width: 50px;
 
   @media (min-width: 500px) {
-    li {
-      width: 300px;
-    }
+    width: 300px;
   }
 `;
 
@@ -28,12 +25,12 @@ export default function Recipes() {
     <RecipesList>
       {recipes && recipes.length > 0 ? (
         recipes.map((recipe) => (
-          <li key={recipe.id}>
+          <RecipesListElement key={recipe.id}>
             <Recipe key={recipe.id} recipe={recipe} />
-          </li>
+          </RecipesListElement>
         ))
       ) : (
-        <li>Keine Rezepte gefunden</li>
+        <RecipesListElement>Keine Rezepte gefunden</RecipesListElement>
       )}
     </RecipesList>
   );
