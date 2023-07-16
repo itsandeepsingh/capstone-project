@@ -35,7 +35,7 @@ const RecipeTime = styled.div`
 
   font-size: 14px;
   left: 10px;
-  top: ${(props) => (props.$sWorkingTime ? "10px" : "35px")};
+  top: ${(props) => (props.$isWorkingTime ? "10px" : "35px")};
   padding: 3px 10px;
   border-radius: 9px;
 
