@@ -8,7 +8,12 @@ const RecipesList = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
+  padding-top: 34px; 
   margin: 20px;
+
+  @media (max-width: 500px) {
+    padding-top: 22px; 
+  }
   }`;
 
 const RecipesListElement = styled.li`
@@ -20,13 +25,22 @@ const RecipesListElement = styled.li`
   }
 `;
 
-export default function Recipes() {
+export default function Recipes({ recipesSelection, onToggleSelection }) {
   return (
     <RecipesList>
       {recipes && recipes.length > 0 ? (
         recipes.map((recipe) => (
           <RecipesListElement key={recipe.id}>
-            <Recipe key={recipe.id} recipe={recipe} />
+            <Recipe
+              key={recipe.id}
+              recipe={recipe}
+              isSelected={
+                recipesSelection?.find(
+                  (selection) => selection.id === recipe.id
+                )?.isSelected
+              }
+              onToggleSelection={() => onToggleSelection(recipe.id)}
+            />
           </RecipesListElement>
         ))
       ) : (
