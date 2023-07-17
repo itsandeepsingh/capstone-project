@@ -5,18 +5,19 @@ const Footer = styled.div`
   position: fixed;
   z-index: 2;
   bottom: 0px;
-  background-color: rgba(249, 225, 217, 0.85);
+  background-color: rgba(249, 225, 217, 0.95);
   width: 100%;
   justify-content: space-between;
 `;
 const Text = styled.p`
-  padding: 3px 15px;
-  margin: 15px;
-  font-weight: bold;
+  margin: 10px;
 
+  padding: 3px 20px;
   font-size: 16px;
 
   @media (max-width: 500px) {
+    margin: 5px;
+    padding: 3px 5px;
     font-size: 14px;
   }
 `;
