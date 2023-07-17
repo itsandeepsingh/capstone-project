@@ -7,7 +7,7 @@ const Header = styled.div`
   z-index: 2;
   top: 0px;
   right: 0px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.85);
   width: 100%;
 `;
 const Button = styled.button`

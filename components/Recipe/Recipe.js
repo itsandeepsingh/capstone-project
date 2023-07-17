@@ -19,6 +19,7 @@ const RecipeTitle = styled.p`
   text-align: left;
   margin: ${(props) => (props.$isTitle ? "5px 0" : "3px 0")};
   ${(props) => (props.$isTitle ? "font-weight:bold" : "font-style:italic")};
+  color: ${(props) => (props.$isTitle ? "black" : "#565656")};
 
   @media (max-width: 500px) {
     font-size: 13px;
