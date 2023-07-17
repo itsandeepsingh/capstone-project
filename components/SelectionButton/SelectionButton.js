@@ -4,7 +4,7 @@ const Header = styled.div`
   display: flex;
   justify-content: flex-end;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   top: 0px;
   right: 0px;
   background-color: white;
