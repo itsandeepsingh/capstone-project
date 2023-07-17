@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
+import SelectionHook from "../SelectionHook/SelectionHook";
 
 const RecipeContainer = styled.div`
   flex-basis: calc(50% - 10px);
@@ -48,7 +49,7 @@ const RecipeTime = styled.div`
   }
 `;
 
-export default function Recipe({ recipe }) {
+export default function Recipe({ recipe, isSelected, onToggleSelection }) {
   return (
     <RecipeContainer>
       <div style={{ position: "relative" }}>
@@ -57,7 +58,10 @@ export default function Recipe({ recipe }) {
           alt={recipe.title}
           width={300}
           height={200}
+          onClick={onToggleSelection}
+          aria-label={isSelected ? "unselect" : "select"}
         />
+        {isSelected && <SelectionHook />}
         <RecipeTime $isWorkingTime>
           Arbeitszeit {recipe.workingTime} Min.
         </RecipeTime>
