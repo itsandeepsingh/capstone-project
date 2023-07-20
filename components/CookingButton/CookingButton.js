@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Link from "next/link.js";
 
 const Container = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ const Button = styled.button`
 
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
   font-size: 20px;
-  padding: 17px 70px;
+  padding: 12px 105px;
   border-radius: 40px;
 
   @media (max-width: 500px) {
@@ -35,7 +36,9 @@ const Button = styled.button`
 export default function CookingButton() {
   return (
     <Container>
-      <Button type="button">Jetzt kochen</Button>
+      <Link href={`${1}`} passHref legacyBehavior>
+        <Button type="button">Jetzt kochen</Button>
+      </Link>
     </Container>
   );
 }
