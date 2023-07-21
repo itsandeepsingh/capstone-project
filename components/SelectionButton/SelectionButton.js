@@ -6,23 +6,25 @@ const Header = styled.div`
   position: fixed;
   z-index: 2;
   top: 0px;
-  right: 0px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.85);
   width: 100%;
 `;
 const Button = styled.button`
-  border: 1px solid black;
-  border-radius: 12px;
+  border: 0px;
   right: 0px;
+  cursor: pointer;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
 
-  font-size: 14px;
-  padding: 3px 15px;
+  font-size: 16px;
+  padding: 6px 20px;
   margin: 15px;
+  border-radius: 16px;
 
   @media (max-width: 500px) {
-    font-size: 11px;
+    font-size: 13px;
     padding: 3px 10px;
     margin: 10px;
+    border-radius: 12px;
   }
 `;
 

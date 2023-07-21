@@ -8,7 +8,7 @@ const RecipesList = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  padding-top: 34px; 
+  padding-top: 40px; 
   margin: 20px;
 
   @media (max-width: 500px) {
@@ -25,7 +25,11 @@ const RecipesListElement = styled.li`
   }
 `;
 
-export default function Recipes({ recipesSelection, onToggleSelection }) {
+export default function Recipes({
+  recipesSelection,
+  onToggleSelection,
+  isSelectionMode,
+}) {
   return (
     <RecipesList>
       {recipes && recipes.length > 0 ? (
@@ -40,6 +44,7 @@ export default function Recipes({ recipesSelection, onToggleSelection }) {
                 )?.isSelected
               }
               onToggleSelection={() => onToggleSelection(recipe.id)}
+              isSelectionMode={isSelectionMode}
             />
           </RecipesListElement>
         ))

@@ -1,5 +1,6 @@
 import GlobalStyle from "../styles";
 import useLocalStorageState from "use-local-storage-state";
+import { RecipeClass, recipes } from "/lib/recipes";
 
 export default function App({ Component, pageProps }) {
   const [isSelectionMode, setSelectionMode] = useLocalStorageState(false);
@@ -8,6 +9,20 @@ export default function App({ Component, pageProps }) {
     "recipes-selection",
     { defaultValue: [] }
   );
+
+  const selectedRecipesCount = recipesSelection?.filter(
+    (recipe) => recipe.isSelected
+  ).length;
+
+  const totalCookingTime = recipesSelection.reduce((total, recipe) => {
+    if (recipe.isSelected) {
+      const selectedRecipe = recipes.find((r) => r.id === recipe.id);
+      if (selectedRecipe) {
+        return total + selectedRecipe.workingTime + selectedRecipe.waitingTime;
+      }
+    }
+    return total;
+  }, 0);
 
   function handleToggleSelectionMode() {
     if (isSelectionMode) {
@@ -18,9 +33,6 @@ export default function App({ Component, pageProps }) {
 
   function handleToggleSelection(id) {
     if (isSelectionMode) {
-      const selectedRecipesCount = recipesSelection.filter(
-        (recipe) => recipe.isSelected
-      ).length;
       if (
         selectedRecipesCount >= 3 &&
         !recipesSelection.find((recipe) => recipe.id === id)?.isSelected
@@ -53,6 +65,8 @@ export default function App({ Component, pageProps }) {
         handleToggleSelectionMode={handleToggleSelectionMode}
         recipesSelection={recipesSelection}
         onToggleSelection={handleToggleSelection}
+        selectedRecipesCount={selectedRecipesCount}
+        totalCookingTime={totalCookingTime}
       />
     </>
   );

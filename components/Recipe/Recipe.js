@@ -13,12 +13,14 @@ const RecipeImage = styled(Image)`
   height: 200px;
   object-fit: cover;
   border-radius: 15px;
+  cursor: ${(props) => (props.$isSelectionMode ? "pointer" : "default")};
 `;
 
 const RecipeTitle = styled.p`
   text-align: left;
   margin: ${(props) => (props.$isTitle ? "5px 0" : "3px 0")};
   ${(props) => (props.$isTitle ? "font-weight:bold" : "font-style:italic")};
+  color: ${(props) => (props.$isTitle ? "black" : "#565656")};
 
   @media (max-width: 500px) {
     font-size: 13px;
@@ -29,8 +31,8 @@ const RecipeTime = styled.div`
   position: absolute;
   background-color: ${(props) =>
     props.$isWorkingTime
-      ? "rgba(83, 134, 139, 0.85)"
-      : "rgba(127, 144, 172, 0.85)"};
+      ? "rgb(83, 134, 139, 0.85)"
+      : "rgb(127, 144, 172, 0.85)"};
 
   color: white;
 
@@ -49,11 +51,17 @@ const RecipeTime = styled.div`
   }
 `;
 
-export default function Recipe({ recipe, isSelected, onToggleSelection }) {
+export default function Recipe({
+  recipe,
+  isSelected,
+  onToggleSelection,
+  isSelectionMode,
+}) {
   return (
     <RecipeContainer>
       <div style={{ position: "relative" }}>
         <RecipeImage
+          $isSelectionMode={isSelectionMode}
           src={require(`/assets/${recipe.picture}`).default}
           alt={recipe.title}
           width={300}
