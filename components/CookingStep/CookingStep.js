@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { RecipeClass, recipes } from "../../lib/recipes";
 import CookingProgressBar from "../CookingProgressBar/CookingProgressBar";
 import CloseButton from "../CloseButton/CloseButton";
+import CookingStepDetails from "../CookingStepDetails/CookingStepDetails";
 
 const PageContainer = styled.div`
   display: flex;
@@ -33,20 +34,24 @@ const CookingStepImage = styled(Image)`
   width: 100%;
 `;
 
-const Text = styled.p`
-  margin: 10px;
-  text-align: ${(props) => (props.$isTitle ? "center" : "left")};
-  font-weight: ${(props) => (props.$isTitle ? "bold" : "normal")};
-  color: ${(props) => (props.$isTitle ? "black" : "#565656")};
+const Title = styled.h3`
+  text-align: center;
+  font-family: "Arial Rounded MT", sans-serif;
+  color: ${(props) => (props.$isRecipeTitle ? "#919191" : "#424242")};
+  margin: 5px;
+  font-size: ${(props) => (props.$isRecipeTitle ? "15px" : "25px")};
 
   @media (max-width: 500px) {
-    font-size: 13px;
+    font-size: ${(props) => (props.$isRecipeTitle ? "13px" : "17px")};
   }
 `;
 
 export default function cookingStep({}) {
+  const recipeOfCookingStep = recipes[0];
   const cookingStep = recipes[0].steps[0];
   const currentStepIndex = 0;
+  const totalSteps = recipes[0].steps.length;
+
   return (
     <PageContainer>
       <CookingProgressBar
@@ -61,10 +66,11 @@ export default function cookingStep({}) {
           width={300}
           height={230}
         />
-        <Text $isTitle>{cookingStep.title}</Text>
-        <Text>{cookingStep.necessaryIngredients}</Text>
-        <Text>{cookingStep.necessaryUtensils}</Text>
-        <Text>{cookingStep.description}</Text>
+        <Title $isRecipeTitle>
+          {recipeOfCookingStep.title} ({currentStepIndex + 1}/{totalSteps})
+        </Title>
+        <Title>{cookingStep.title}</Title>
+        <CookingStepDetails cookingStep={cookingStep} />
       </StepContainer>
     </PageContainer>
   );
