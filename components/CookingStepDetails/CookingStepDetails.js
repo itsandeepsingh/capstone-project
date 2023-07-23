@@ -36,7 +36,7 @@ const Text = styled.p`
   }
 `;
 
-export default function cookingStepDetails({ cookingStep }) {
+export default function CookingStepDetails({ cookingStep }) {
   return (
     <StepDetails>
       <Separator />
@@ -49,15 +49,17 @@ export default function cookingStepDetails({ cookingStep }) {
         />
         {cookingStep.necessaryIngredients}
       </Text>
-      <Text>
-        <Icon
-          src={require(`/assets/utensils.png`).default}
-          alt="Utensils Icon"
-          width={20}
-          height={20}
-        />
-        {cookingStep.necessaryUtensils}
-      </Text>
+      {cookingStep.necessaryUtensils && (
+        <Text>
+          <Icon
+            src={require(`/assets/utensils.png`).default}
+            alt="Utensils Icon"
+            width={20}
+            height={20}
+          />
+          {cookingStep.necessaryUtensils}
+        </Text>
+      )}
       <Separator />
       <Text $isRecipeDescription>{cookingStep.description}</Text>
     </StepDetails>

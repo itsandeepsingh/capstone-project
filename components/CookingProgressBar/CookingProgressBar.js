@@ -26,10 +26,10 @@ const ProgressIndicator = styled.div`
   border-radius: 3px;
 `;
 
-export default function cookingProcessBar({ recipeSteps, currentStepIndex }) {
+export default function CookingProgressBar({ totalSteps, currentStepIndex }) {
   return (
     <Container>
-      {recipeSteps.map((_step, index) => (
+      {Array.from({ length: totalSteps }, (_, index) => (
         <ProgressBar key={index}>
           <ProgressIndicator $pastAndCurrentSteps={index <= currentStepIndex} />
         </ProgressBar>

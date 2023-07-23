@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useRecipesSelection } from "../../contexts/RecipesSelectionContext";
 
 const Header = styled.div`
   display: flex;
@@ -28,10 +29,9 @@ const Button = styled.button`
   }
 `;
 
-export default function SelectionButton({
-  isSelectionMode,
-  handleToggleSelectionMode,
-}) {
+export default function SelectionButton({}) {
+  const { isSelectionMode, handleToggleSelectionMode } = useRecipesSelection();
+
   return (
     <Header>
       <Button

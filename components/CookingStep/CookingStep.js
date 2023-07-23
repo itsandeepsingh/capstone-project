@@ -1,9 +1,10 @@
 import Image from "next/image";
 import styled from "styled-components";
-import { RecipeClass, recipes } from "../../lib/recipes";
 import CookingProgressBar from "../CookingProgressBar/CookingProgressBar";
 import CloseButton from "../CloseButton/CloseButton";
 import CookingStepDetails from "../CookingStepDetails/CookingStepDetails";
+import { useCookingSteps } from "../../contexts/CookingStepsContext";
+import CookingStepNavigation from "../CookingStepNavigation/CookingStepNavigation";
 
 const PageContainer = styled.div`
   display: flex;
@@ -18,6 +19,7 @@ const PageContainer = styled.div`
 `;
 
 const StepContainer = styled.div`
+  position: relative;
   height: calc(100vh - 58px);
   border-radius: 15px;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
@@ -46,31 +48,35 @@ const Title = styled.h3`
   }
 `;
 
-export default function cookingStep({}) {
-  const recipeOfCookingStep = recipes[0];
-  const cookingStep = recipes[0].steps[0];
-  const currentStepIndex = 0;
-  const totalSteps = recipes[0].steps.length;
+export default function CookingStep() {
+  const { currentStepIndex, stepList, getRecipeOfId } = useCookingSteps();
+  const currentStep = stepList[currentStepIndex];
+  const currentRecipe = currentStep
+    ? getRecipeOfId(currentStep.recipeId)
+    : null;
+  const totalSteps = stepList.length;
 
   return (
     <PageContainer>
       <CookingProgressBar
-        recipeSteps={recipes[0].steps}
+        totalSteps={totalSteps}
         currentStepIndex={currentStepIndex}
       />
       <CloseButton />
       <StepContainer>
         <CookingStepImage
-          src={require(`/assets/${cookingStep.picture}`).default}
-          alt={cookingStep.title}
+          src={require(`/assets/${currentStep.picture}`).default}
+          alt={currentStep.title}
           width={300}
           height={230}
         />
         <Title $isRecipeTitle>
-          {recipeOfCookingStep.title} ({currentStepIndex + 1}/{totalSteps})
+          {currentRecipe.title} ({currentStep.stepId}/
+          {currentRecipe.steps.length})
         </Title>
-        <Title>{cookingStep.title}</Title>
-        <CookingStepDetails cookingStep={cookingStep} />
+        <Title>{currentStep.title}</Title>
+        <CookingStepDetails cookingStep={currentStep} />
+        <CookingStepNavigation />
       </StepContainer>
     </PageContainer>
   );

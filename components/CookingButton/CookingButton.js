@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link.js";
+import { useCookingSteps } from "../../contexts/CookingStepsContext";
 
 const Container = styled.div`
   display: flex;
@@ -34,9 +35,16 @@ const Button = styled.button`
 `;
 
 export default function CookingButton() {
+  const { stepList, setCurrentStepIndex } = useCookingSteps();
+  const firstStep = stepList[0];
+  setCurrentStepIndex(0);
   return (
     <Container>
-      <Link href={`${1}`} passHref legacyBehavior>
+      <Link
+        href={`${"CookingStep" + firstStep.recipeId + "_" + firstStep.stepId}`}
+        passHref
+        legacyBehavior
+      >
         <Button type="button">Jetzt kochen</Button>
       </Link>
     </Container>
