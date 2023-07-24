@@ -58,26 +58,30 @@ export default function CookingStep() {
 
   return (
     <PageContainer>
-      <CookingProgressBar
-        totalSteps={totalSteps}
-        currentStepIndex={currentStepIndex}
-      />
-      <CloseButton />
-      <StepContainer>
-        <CookingStepImage
-          src={require(`/assets/${currentStep.picture}`).default}
-          alt={currentStep.title}
-          width={300}
-          height={230}
-        />
-        <Title $isRecipeTitle>
-          {currentRecipe.title} ({currentStep.stepId}/
-          {currentRecipe.steps.length})
-        </Title>
-        <Title>{currentStep.title}</Title>
-        <CookingStepDetails cookingStep={currentStep} />
-        <CookingStepNavigation />
-      </StepContainer>
+      {currentStep && (
+        <>
+          <CookingProgressBar
+            totalSteps={totalSteps}
+            currentStepIndex={currentStepIndex}
+          />
+          <CloseButton />
+          <StepContainer>
+            <CookingStepImage
+              src={require(`/assets/${currentStep.picture}`).default}
+              alt={currentStep.title}
+              width={300}
+              height={230}
+            />
+            <Title $isRecipeTitle>
+              {currentRecipe.title} ({currentStep.stepId}/
+              {currentRecipe.steps.length})
+            </Title>
+            <Title>{currentStep.title}</Title>
+            <CookingStepDetails cookingStep={currentStep} />
+            <CookingStepNavigation />
+          </StepContainer>
+        </>
+      )}
     </PageContainer>
   );
 }
