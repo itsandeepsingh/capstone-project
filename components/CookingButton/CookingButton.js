@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Link from "next/link.js";
 import { useCookingSteps } from "../../contexts/CookingStepsContext";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   display: flex;
@@ -37,16 +37,21 @@ const Button = styled.button`
 export default function CookingButton() {
   const { stepList, setCurrentStepIndex } = useCookingSteps();
   const firstStep = stepList[0];
-  setCurrentStepIndex(0);
+  const router = useRouter();
+
+  const handleStartCooking = () => {
+    if (firstStep) {
+      const firstCookingStepURL = `/CookingStep${firstStep.recipeId}_${firstStep.stepId}`;
+      router.push(firstCookingStepURL);
+      setCurrentStepIndex(0);
+    }
+  };
+
   return (
     <Container>
-      <Link
-        href={`${"CookingStep" + firstStep.recipeId + "_" + firstStep.stepId}`}
-        passHref
-        legacyBehavior
-      >
-        <Button type="button">Jetzt kochen</Button>
-      </Link>
+      <Button type="button" onClick={handleStartCooking}>
+        Jetzt kochen
+      </Button>
     </Container>
   );
 }
