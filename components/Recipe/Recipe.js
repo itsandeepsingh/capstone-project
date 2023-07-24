@@ -69,7 +69,13 @@ export default function Recipe({
           onClick={onToggleSelection}
           aria-label={isSelected ? "unselect" : "select"}
         />
-        {isSelected && <SelectionHook />}
+        {isSelected && (
+          <SelectionHook
+            onToggleSelection={onToggleSelection}
+            isSelected={isSelected}
+            isSelectionMode={isSelectionMode}
+          />
+        )}
         <RecipeTime $isWorkingTime>
           Arbeitszeit {recipe.workingTime} Min.
         </RecipeTime>

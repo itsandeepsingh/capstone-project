@@ -6,6 +6,7 @@ const Hook = styled(Image)`
   z-index: 1;
   bottom: 10px;
   right: 10px;
+  cursor: ${(props) => (props.$isSelectionMode ? "pointer" : "default")};
 
   width: 30px;
   height: 30px;
@@ -16,13 +17,20 @@ const Hook = styled(Image)`
   }
 `;
 
-export default function SelectionHook() {
+export default function SelectionHook({
+  onToggleSelection,
+  isSelected,
+  isSelectionMode,
+}) {
   return (
     <Hook
+      $isSelectionMode={isSelectionMode}
       src={require(`/assets/hook.png`).default}
       width={22}
       height={22}
       alt=""
+      onClick={onToggleSelection}
+      aria-label={isSelected ? "unselect" : "select"}
     />
   );
 }

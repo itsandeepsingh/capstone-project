@@ -1,6 +1,7 @@
 import Recipe from "../Recipe/Recipe";
 import styled from "styled-components";
-import { RecipeClass, recipes } from "../../lib/recipes";
+import { recipes } from "../../lib/recipes";
+import { useRecipesSelection } from "../../contexts/RecipesSelectionContext";
 
 const RecipesList = styled.div`
   list-style: none;
@@ -8,13 +9,13 @@ const RecipesList = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  padding-top: 40px; 
+  padding-top: 40px;
   margin: 20px;
 
   @media (max-width: 500px) {
-    padding-top: 22px; 
+    padding-top: 22px;
   }
-  }`;
+}`;
 
 const RecipesListElement = styled.li`
   width: 150px;
@@ -25,11 +26,10 @@ const RecipesListElement = styled.li`
   }
 `;
 
-export default function Recipes({
-  recipesSelection,
-  onToggleSelection,
-  isSelectionMode,
-}) {
+export default function Recipes() {
+  const { isSelectionMode, recipesSelection, handleToggleSelection } =
+    useRecipesSelection();
+
   return (
     <RecipesList>
       {recipes && recipes.length > 0 ? (
@@ -43,7 +43,7 @@ export default function Recipes({
                   (selection) => selection.id === recipe.id
                 )?.isSelected
               }
-              onToggleSelection={() => onToggleSelection(recipe.id)}
+              onToggleSelection={() => handleToggleSelection(recipe.id)}
               isSelectionMode={isSelectionMode}
             />
           </RecipesListElement>

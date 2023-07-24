@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import CookingButton from "../CookingButton/CookingButton";
+import { useRecipesSelection } from "../../contexts/RecipesSelectionContext";
 
 const Footer = styled.div`
   display: flex;
@@ -22,14 +24,20 @@ const Text = styled.p`
   }
 `;
 
-export default function SelectionDetails({
-  selectedRecipesCount,
-  totalCookingTime,
-}) {
+export default function SelectionDetails() {
+  const { selectedRecipesCount, totalCookingTime } = useRecipesSelection();
+
   return (
-    <Footer>
-      <Text>Ausgewählt: {selectedRecipesCount}</Text>
-      <Text>Gesamtzeit: {totalCookingTime} Min.</Text>
-    </Footer>
+    <>
+      {selectedRecipesCount > 0 && (
+        <>
+          <CookingButton />
+          <Footer>
+            <Text>Ausgewählt: {selectedRecipesCount}</Text>
+            <Text>Gesamtzeit: {totalCookingTime} Min.</Text>
+          </Footer>
+        </>
+      )}
+    </>
   );
 }
