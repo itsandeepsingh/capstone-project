@@ -67,7 +67,11 @@ export default function Recipe({
           width={300}
           height={200}
           onClick={onToggleSelection}
-          aria-label={isSelected ? "unselect" : "select"}
+          aria-label={
+            isSelected
+              ? "Click here to select the recipe"
+              : "Click here to unselect the recipe"
+          }
         />
         {isSelected && (
           <SelectionHook

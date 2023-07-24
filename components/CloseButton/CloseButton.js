@@ -35,7 +35,12 @@ export default function CloseButton() {
 
   return (
     <Container>
-      <Button onClick={handleClose}>X</Button>
+      <Button
+        onClick={handleClose}
+        aria-label={"Click here to go back to the recipe overview"}
+      >
+        X
+      </Button>
     </Container>
   );
 }
