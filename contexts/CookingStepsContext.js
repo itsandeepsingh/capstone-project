@@ -82,19 +82,33 @@ function determineStartTime(step) {
     const previousStep = recipe.steps.find(
       (s) => s.stepId === step.dependentPreviousSteps[0]
     );
-    if (step.dependentPreviousSteps === 1) {
+
+    if (step.dependentPreviousSteps.length === 1) {
       startTime = previousStep.totalTime;
     } else {
+      //step with multiple previous steps
+      let waitingTime = 0;
+      let workingTime = 0;
       step.dependentPreviousSteps.forEach((stepId) => {
         const previousStep = recipe.steps.find((s) => s.stepId === stepId);
         if (previousStep.dependentPreviousSteps.length === 0) {
-          if (previousStep.totalTime > startTime) {
-            startTime = previousStep.totalTime;
+          if (previousStep.isWaitingTime) {
+            waitingTime = waitingTime + previousStep.totalTime;
+          } else {
+            workingTime = workingTime + previousStep.totalTime;
           }
         } else {
           startTime = startTime + previousStep.totalTime;
         }
       });
+      //for steps with multiple previous steps
+      if (waitingTime > 0 || workingTime > 0) {
+        if (waitingTime >= workingTime) {
+          startTime = startTime + waitingTime;
+        } else {
+          startTime = startTime + workingTime;
+        }
+      }
     }
   }
   return startTime;
