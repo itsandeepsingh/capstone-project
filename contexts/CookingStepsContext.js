@@ -66,7 +66,8 @@ function determineStepList(selectedRecipes) {
       changeStartTimeIfMultipleWorkingStepsInAGroup(groupedSteps);
 
     if (startTimeChanged) {
-      reorderGroupedSteps(groupedSteps);
+      let updatedGroupedSteps = reorderGroupedSteps(groupedSteps);
+      groupedSteps = updatedGroupedSteps;
     }
 
     sortGroupsInGroupedSteps(groupedSteps);
@@ -204,6 +205,7 @@ function reorderGroupedSteps(groupedSteps) {
   Object.values(groupedSteps).forEach((group) => {
     groupSteps(group, newGroupedSteps);
   });
+  return newGroupedSteps;
 }
 
 function sortGroupsInGroupedSteps(groupedSteps) {
@@ -215,6 +217,7 @@ function sortGroupsInGroupedSteps(groupedSteps) {
     waitingSteps.sort((stepA, stepB) => stepB.totalTime - stepA.totalTime);
     nonWaitingSteps.sort((stepA, stepB) => stepB.totalTime - stepA.totalTime);
     group.length = 0;
+    // waitings steps should come first --> funktuniert das wirklich ????
     group.push(...waitingSteps, ...nonWaitingSteps);
   });
 }
