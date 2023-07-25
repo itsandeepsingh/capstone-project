@@ -8,10 +8,10 @@ const Container = styled.div`
   position: fixed;
   z-index: 2;
   width: 100%;
-  bottom: 55px;
+  bottom: 70px;
 
   @media (max-width: 500px) {
-    bottom: 40px;
+    bottom: 60px;
   }
 `;
 
