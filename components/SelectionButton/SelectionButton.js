@@ -37,7 +37,11 @@ export default function SelectionButton({}) {
       <Button
         type="button"
         onClick={handleToggleSelectionMode}
-        aria-label={isSelectionMode ? "selectionModeOff" : "selectionModeOn"}
+        aria-label={
+          isSelectionMode
+            ? "Click here to start selecting recipes for cooking"
+            : "Click here to stop selecting recipes for cooking"
+        }
       >
         {isSelectionMode ? "Abbrechen" : "Auswählen"}
       </Button>

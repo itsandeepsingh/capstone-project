@@ -42,7 +42,7 @@ export default function CookingStepDetails({ cookingStep }) {
       <Separator />
       <Text>
         <Icon
-          src={require(`/assets/ingredients.png`).default}
+          src={require(`/assets/cookingSteps/ingredients.png`).default}
           alt="Ingredients Icon"
           width={18}
           height={18}
@@ -52,7 +52,7 @@ export default function CookingStepDetails({ cookingStep }) {
       {cookingStep.necessaryUtensils && (
         <Text>
           <Icon
-            src={require(`/assets/utensils.png`).default}
+            src={require(`/assets/cookingSteps/utensils.png`).default}
             alt="Utensils Icon"
             width={20}
             height={20}

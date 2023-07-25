@@ -30,7 +30,11 @@ export default function SelectionHook({
       height={22}
       alt=""
       onClick={onToggleSelection}
-      aria-label={isSelected ? "unselect" : "select"}
+      aria-label={
+        isSelected
+          ? "Click here to select the recipe"
+          : "Click here to unselect the recipe"
+      }
     />
   );
 }

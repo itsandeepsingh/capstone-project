@@ -49,7 +49,11 @@ export default function CookingButton() {
 
   return (
     <Container>
-      <Button type="button" onClick={handleStartCooking}>
+      <Button
+        type="button"
+        onClick={handleStartCooking}
+        aria-label={"Click here to start cooking"}
+      >
         Jetzt kochen
       </Button>
     </Container>

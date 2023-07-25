@@ -55,12 +55,22 @@ export default function CookingStep() {
     <>
       <Container>
         {currentStepIndex > 0 && (
-          <Button onClick={handlePreviousStep}>{"<"}</Button>
+          <Button
+            onClick={handlePreviousStep}
+            aria-label={"Click here to go back to the previous cooking step"}
+          >
+            {"<"}
+          </Button>
         )}
       </Container>
       <Container $isNextStepButton>
         {currentStepIndex + 1 < stepList.length && (
-          <Button onClick={handleNextStep}>{">"}</Button>
+          <Button
+            onClick={handleNextStep}
+            aria-label={"Click here to go to the next cooking step"}
+          >
+            {">"}
+          </Button>
         )}
       </Container>
     </>
