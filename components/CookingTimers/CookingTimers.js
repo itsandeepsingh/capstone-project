@@ -39,7 +39,8 @@ export default function CookingTimers() {
           (timerState) => timerState.id === timer.id
         );
 
-        return currentStepTimers.length > 0 ? (
+        return currentStepTimers.length > 0 &&
+          timerState.remainingTime !== "00:00" ? (
           <CookingTimer
             key={timer.id}
             timer={timer}
