@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 const Container = styled.div`
   display: flex;
   position: absolute;
-  bottom: 20px;
-  ${(props) => (props.$isNextStepButton ? "right: 20px" : "left: 20px")};
+  bottom: 5px;
+  ${(props) => (props.$isNextStepButton ? "right: 10px" : "left: 10px")};
 `;
 
 const Button = styled.button`

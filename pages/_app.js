@@ -1,6 +1,7 @@
 import GlobalStyle from "../styles";
 import { RecipesSelectionProvider } from "../contexts/RecipesSelectionContext";
 import { CookingStepsProvider } from "../contexts/CookingStepsContext";
+import { TimersProvider } from "../contexts/CookingTimerContext";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -8,7 +9,9 @@ export default function App({ Component, pageProps }) {
       <GlobalStyle />
       <RecipesSelectionProvider>
         <CookingStepsProvider>
-          <Component {...pageProps} />
+          <TimersProvider>
+            <Component {...pageProps} />
+          </TimersProvider>
         </CookingStepsProvider>
       </RecipesSelectionProvider>
     </>

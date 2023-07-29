@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { recipes } from "../lib/recipes";
 import { useRecipesSelection } from "./RecipesSelectionContext";
@@ -17,39 +17,75 @@ export function CookingStepsProvider({ children }) {
     0
   );
 
-  let stepList = [];
-  let optimizedTotalCookingTime = 0;
-  if (recipesSelection.length === 1) {
-    stepList = createStepList(recipesSelection);
-  } else {
-    stepList = createStepList(recipesSelection);
-    const highestStartTime = determineHighestStartTime(stepList);
-    const stepsWithHighestStartTime = getStepsWithHighestStartTime(
-      stepList,
-      highestStartTime
-    );
-    optimizedTotalCookingTime =
-      highestStartTime +
-      Math.max(...stepsWithHighestStartTime.map((step) => step.totalTime));
+  const [stepList, setStepList] = useState([]);
+  const [optimizedTotalCookingTime, setOptimizedTotalCookingTime] = useState(0);
+  const [initialTimersStateList, setInitialTimersStateList] = useState([]);
 
-    stepList = determineStepList(
-      highestStartTime,
-      optimizedTotalCookingTime,
-      stepList
-    );
-  }
+  useEffect(() => {
+    let newStepList = createStepList(recipesSelection);
+    setOptimizedTotalCookingTime(0);
+    if (recipesSelection.length > 1) {
+      const highestStartTime = determineHighestStartTime(newStepList);
+      const stepsWithHighestStartTime = getStepsWithHighestStartTime(
+        newStepList,
+        highestStartTime
+      );
+      const newOptimizedTotalCookingTime =
+        highestStartTime +
+        Math.max(...stepsWithHighestStartTime.map((step) => step.totalTime));
+
+      newStepList = determineStepList(
+        highestStartTime,
+        newOptimizedTotalCookingTime,
+        newStepList
+      );
+
+      const timersStateList = addTimersToSteps(newStepList);
+      setInitialTimersStateList(timersStateList);
+      setOptimizedTotalCookingTime(newOptimizedTotalCookingTime);
+    }
+
+    setStepList(newStepList);
+  }, [recipesSelection]);
 
   function getRecipeOfId(recipeId) {
     const selectedRecipe = recipes.find((recipe) => recipe.id === recipeId);
     return selectedRecipe;
   }
 
+  function addTimersToSteps(stepList) {
+    const timersStateList = [];
+    for (let i = 0; i < stepList.length; i++) {
+      const step = stepList[i];
+      step.timers = [];
+
+      if (i > 0 && stepList[i - 1].timers.length > 0) {
+        step.timers = [...stepList[i - 1].timers];
+      }
+
+      if (step.isWaitingTime) {
+        const timer = {
+          id: step.recipeId + "_" + step.stepId,
+          title: step.title,
+        };
+        step.timers.push(timer);
+        const timerForTimerList = {
+          id: step.recipeId + "_" + step.stepId,
+          isRunning: false,
+          remainingTime: formatTime(step.totalTime),
+        };
+        timersStateList.push(timerForTimerList);
+      }
+    }
+    return timersStateList;
+  }
   const cookingStepsState = {
     currentStepIndex,
     setCurrentStepIndex,
     stepList,
     getRecipeOfId,
     optimizedTotalCookingTime,
+    initialTimersStateList,
   };
 
   return (
@@ -57,6 +93,23 @@ export function CookingStepsProvider({ children }) {
       {children}
     </CookingStepsContext.Provider>
   );
+}
+
+function formatTime(totalMinutes) {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  const seconds = 0;
+
+  let formattedTime = "";
+  if (hours > 0) {
+    formattedTime += `${hours.toString().padStart(2, "0")}:`;
+  }
+
+  formattedTime += `${minutes.toString().padStart(2, "0")}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
+
+  return formattedTime;
 }
 
 function determineStepList(highestStartTime, totalCookingTime, stepList) {
