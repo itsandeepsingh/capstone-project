@@ -17,7 +17,27 @@ export function CookingStepsProvider({ children }) {
     0
   );
 
-  const stepList = determineStepList(recipesSelection);
+  let stepList = [];
+  let optimizedTotalCookingTime = 0;
+  if (recipesSelection.length === 1) {
+    stepList = createStepList(recipesSelection);
+  } else {
+    stepList = createStepList(recipesSelection);
+    const highestStartTime = determineHighestStartTime(stepList);
+    const stepsWithHighestStartTime = getStepsWithHighestStartTime(
+      stepList,
+      highestStartTime
+    );
+    optimizedTotalCookingTime =
+      highestStartTime +
+      Math.max(...stepsWithHighestStartTime.map((step) => step.totalTime));
+
+    stepList = determineStepList(
+      highestStartTime,
+      optimizedTotalCookingTime,
+      stepList
+    );
+  }
 
   function getRecipeOfId(recipeId) {
     const selectedRecipe = recipes.find((recipe) => recipe.id === recipeId);
@@ -29,6 +49,7 @@ export function CookingStepsProvider({ children }) {
     setCurrentStepIndex,
     stepList,
     getRecipeOfId,
+    optimizedTotalCookingTime,
   };
 
   return (
@@ -38,42 +59,27 @@ export function CookingStepsProvider({ children }) {
   );
 }
 
-function determineStepList(selectedRecipes) {
-  if (selectedRecipes.length === 1) {
-    return createStepList(selectedRecipes);
-  } else {
-    let stepList = createStepList(selectedRecipes);
+function determineStepList(highestStartTime, totalCookingTime, stepList) {
+  changeStartTimeforIndependentStepsInStepList(
+    stepList,
+    totalCookingTime,
+    highestStartTime
+  );
 
-    const highestStartTime = determineHighestStartTime(stepList);
-    const stepsWithHighestStartTime = getStepsWithHighestStartTime(
-      stepList,
-      highestStartTime
-    );
-    const totalCookingTime =
-      highestStartTime +
-      Math.max(...stepsWithHighestStartTime.map((step) => step.totalTime));
+  let groupedSteps = {};
+  groupSteps(stepList, groupedSteps);
 
-    changeStartTimeforIndependentStepsInStepList(
-      stepList,
-      totalCookingTime,
-      highestStartTime
-    );
+  let startTimeChanged =
+    changeStartTimeIfMultipleWorkingStepsInAGroup(groupedSteps);
 
-    let groupedSteps = {};
-    groupSteps(stepList, groupedSteps);
-
-    let startTimeChanged =
-      changeStartTimeIfMultipleWorkingStepsInAGroup(groupedSteps);
-
-    if (startTimeChanged) {
-      let updatedGroupedSteps = reorderGroupedSteps(groupedSteps);
-      groupedSteps = updatedGroupedSteps;
-    }
-
-    sortGroupsInGroupedSteps(groupedSteps);
-
-    return updateStepList(groupedSteps);
+  if (startTimeChanged) {
+    let updatedGroupedSteps = reorderGroupedSteps(groupedSteps);
+    groupedSteps = updatedGroupedSteps;
   }
+
+  sortGroupsInGroupedSteps(groupedSteps);
+
+  return updateStepList(groupedSteps);
 }
 
 function determineStartTime(step) {
