@@ -39,13 +39,12 @@ export function CookingStepsProvider({ children }) {
         newOptimizedTotalCookingTime,
         newStepList
       );
-
-      const timersStateList = addTimersToSteps(newStepList);
-      setInitialTimersStateList(timersStateList);
       setOptimizedTotalCookingTime(newOptimizedTotalCookingTime);
     }
 
     setStepList(newStepList);
+    const timersStateList = addTimersToSteps(newStepList);
+    setInitialTimersStateList(timersStateList);
   }, [recipesSelection]);
 
   function getRecipeOfId(recipeId) {
