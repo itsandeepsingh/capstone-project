@@ -25,8 +25,6 @@ const Icon = styled(Image)`
 
 const Text = styled.p`
   display: flex;
-  text-align: left;
-  align-items: center;
   font-family: "Arial Rounded MT", sans-serif;
   color: ${(props) => (props.$isRecipeDescription ? "#424242" : "#919191")};
 

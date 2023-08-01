@@ -5,6 +5,7 @@ import CloseButton from "../CloseButton/CloseButton";
 import CookingStepDetails from "../CookingStepDetails/CookingStepDetails";
 import { useCookingSteps } from "../../contexts/CookingStepsContext";
 import CookingStepNavigation from "../CookingStepNavigation/CookingStepNavigation";
+import CookingTimers from "../CookingTimers/CookingTimers";
 
 const PageContainer = styled.div`
   display: flex;
@@ -20,12 +21,12 @@ const PageContainer = styled.div`
 
 const StepContainer = styled.div`
   position: relative;
-  height: calc(100vh - 58px);
+  height: calc(100vh - 160px);
   border-radius: 15px;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
 
   @media (min-width: 500px) {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 190px);
   }
 `;
 
@@ -80,6 +81,7 @@ export default function CookingStep() {
             <CookingStepDetails cookingStep={currentStep} />
             <CookingStepNavigation />
           </StepContainer>
+          <CookingTimers />
         </>
       )}
     </PageContainer>
